@@ -25,6 +25,8 @@ def login():
             login_user(user, remember=form.rememer.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.account'))
+        else:
+            flash('Войти не удалось. Пожалуйста, проверьте электронную почту или пароль', 'danger')
     return render_template('login1.html', title='login1', legend="Login", form=form)
 
 
