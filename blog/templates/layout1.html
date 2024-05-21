@@ -12,10 +12,10 @@
 {% block menu %}
 <header class="header">
   <ul class="list">
-    <li> <a href="#">Main</a></li>
-    <li> <a href="#">Logout</a></li>
-    <!-- <li> <a href="url_for(main.index)">Main</a></li> -->
-    <!-- <li> <a href="url_for(main.logout)">Logout</a></li> -->
+    <li> <a href="{{ url_for('main.index') }}">Main</a></li>
+    <li> <a href="{{ url_for('main.login') }}">LogIn</a></li>
+    <li> <a href="{{ url_for('main.index') }}">Account</a></li>
+    <li> <a href="{{ url_for('main.logout') }}">Logout</a></li>
   </ul>
 </header>
 {% endblock menu %}
