@@ -1,15 +1,10 @@
-from blog import app
-from blog.main.routes import main
-from flask_login import LoginManager
+from blog import create_app, create_user
 
-app.register_blueprint(main)
-app.config.from_pyfile('main/settings.py')
+app = create_app()
 
-# login_manager = LoginManager()
-# login_manager.login_view = 'main.login'
-# login_manager.login_message_category = 'danger'
-# login_manager.init_app(app)
+
 if __name__ == '__main__':
+    create_user()
     app.run(debug=True, port=5000)
 
 

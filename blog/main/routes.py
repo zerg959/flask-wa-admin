@@ -6,17 +6,17 @@ from flask import (
 from blog.main.forms import LoginForm
 from blog.models import User
 from blog.models import check_password_hash
-from flask_login import login_user, current_user, login_required
+from flask_login import login_user, current_user, login_required, logout_user
 
 main = Blueprint('main', __name__)
 
 
 @main.route('/')
 def index():
-    return render_template('index1.html', title='index1')
+    return render_template('index.html', title='Main Page')
 
 
-@main.route('/login') #, methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -33,9 +33,13 @@ def login():
 @main.route('/account')
 @login_required
 def account():
-    return render_template('account1.html', title='account1')
+    return render_template(
+        'account1.html',
+        title='account1',
+        current_user=current_user)
 
 
 @main.route('/logout')
 def logout():
+    logout_user()
     return redirect(url_for('main.index'))
