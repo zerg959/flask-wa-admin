@@ -1,35 +1,78 @@
-{% extends "layout.html" %}
-
-{% block title %}
-    Register
-{% endblock %}
-
+{% extends "layout1.html" %}
 {% block background %}
     <header class="masthead" style="background-image: url('/static/img/register-bg.jpeg')">
 {% endblock %}
 
 {% block header %}
-    <h1>Registration</h1>
-    <span class="subheading">Please enter your username and password below</span>
+    <h1>Registrtion Form</h1>
+    <span class="subheading">Please register below</span>
 {% endblock %}
+{% block content %}
+<h1>{{ title }}</h1><div class="register_form sign_in">
+  <form action="" method="POST">
 
-{% block main %}
-    <form action="{{ url_for('register') }}" method="post">
-        <div class="form-floating">
-            <input autocomplete="off" class="form-control" id="username" name="username" placeholder="Username" type="text" value="{{ request.form['username'] }}">
-            <label for="username">Username</label>
-        </div>
-        <div class="form-floating">
-            <input autocomplete="off" class="form-control" id="password" name="password" placeholder="Password" type="password" value="{{ request.form['password'] }}">
-            <label for="password">Password</label>
-        </div>
-        <div class="form-floating">
-            <input autocomplete="off" class="form-control" iid="confirmation" name="confirmation" placeholder="Password (again)" type="password" value="{{ request.form['confirmation'] }}">
-            <label for="confirmation">Password (again)</label>
-        </div>
+      {{ form_registration.hidden_tag() }}
+      <legend class="legend">{{ legend }}</legend>
 
-        <br />
+      {% if form_registration.username.errors %}
+      {{ form_registration.username(class='form-post-title is-invalid', placeholder='Username') }}
+      <div class="invalid-feedback">
+          {% for errors in form_registration.username.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+      </div>
+      {% else %}
+      {{ form_registration.username(class='form-post-title', placeholder='Username') }}
+      {% endif %}
 
-        <button class="btn btn-primary text-uppercase mb-5" id="submitButton" type="submit">Register</button>
-    </form>
-{% endblock %}
+      {% if form_registration.email.errors %}
+      {{ form_registration.email(class='form-post-title is-invalid', placeholder='Email') }}
+      <div class="invalid-feedback">
+          {% for errors in form_registration.email.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+      </div>
+      {% else %}
+      {{ form_registration.email(class='form-post-title', placeholder='Email') }}
+      {% endif %}
+
+      {% if form_registration.password.errors %}
+      {{ form_registration.password(class='form-post-title is-invalid', placeholder='Password') }}
+      <div class="invalid-feedback">
+          {% for errors in form_registration.password.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+      </div>
+      {% else %}
+      {{ form_registration.password(class='form-post-title', placeholder='Password') }}
+      {% endif %}
+
+      {% if form_registration.confirm_password.errors %}
+      {{ form_registration.confirm_password(class='form-post-title is-invalid', placeholder='Confirm your password') }}
+      <div class="invalid-feedback">
+          {% for errors in form_registration.confirm_password.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+      </div>
+      {% else %}
+      {{ form_registration.confirm_password(class='form-post-title', placeholder='Confirm your password') }}
+      {% endif %}
+
+     {# {{ form_registration.role() }} #}
+
+
+      <div class="form-group_button">
+         <div class="btn">
+              {{ form_registration.submit(class='btn_sign_in') }}
+         </div>
+            <small class="text-muted">
+          <a class='ml-2' href="{{ url_for('users.login')}}"> Already registered? </a>
+      </small>
+      </div>
+
+  </form>
+  <div class="border-top">
+
+  </div>
+</div>
+{% endblock content %}

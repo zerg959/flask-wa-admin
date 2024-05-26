@@ -1,4 +1,15 @@
 {% extends "layout1.html" %}
+{% block header %}
+    <h1>FlaskBlog</h1>
+    <span class="subheading">A simple blog using Flask Python framework</span>
+{% endblock header %}
+{% block content %}
+      {% block title %}
+      Welcome to FlaskBlog
+      {% endblock title%}
+    <h1>FlaskBlog</h1>
+    <span class="subheading">A simple blog using Flask Python framework</span>
+{% endblock content %}
 {% block main %}
-<h1>{{ title }}</h1>
-{% endblock %}
+
+{% endblock main %}
