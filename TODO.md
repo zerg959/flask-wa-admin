@@ -1,3 +1,5 @@
 - запустить миграции
 - добавить дефолтную картинку юзерпика в static/img
 - найти ошибку: не авторизуется зарегистрированный юзер. не открывает страницу аккаунта.
+- https://www.youtube.com/playlist?list=PLq89pZIwXSou6UxWQahrfRUGYpta43md4 Flask Блог
+- https://github.com/MikesoWeb/Blog-on-Flask/
