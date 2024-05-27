@@ -1,0 +1,25 @@
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="register_form sign_in">
+  <form action="" method="POST">
+
+      {{ form_registration.hidden_tag() }}
+      <legend class="legend">{{ legend }}</legend>
+
+    {{ form_registration.username(class='form-post-title', placeholder='Username') }}
+    {{ form_registration.email(class='form-post-title', placeholder='Email') }}
+    {{ form_registration.password(class='form-post-title', placeholder='Password') }}
+    {{ form_registration.confirm_password(class='form-post-title', placeholder='Confirm your password') }}
+     <div class="form-group_button">
+         <div class="btn">
+              {{ form_registration.submit(class='btn_sign_in') }}
+         </div>
+            <small class="text-muted">
+          <a class='ml-2' href="{{ url_for('users.login')}}"> Already registered? </a>
+      </small>
+      </div>
+
+  </form>
+
+</div>
+{% endblock content %}

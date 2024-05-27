@@ -18,10 +18,12 @@ users = Blueprint('users', __name__)
 
 @users.route('/register', methods=['GET', 'POST'])
 def register():
-    form_registration = RegistrationForm()
-    if form_registration.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form_registration.password.data).decode('utf-8')
-        user = User(username=form_registration.username.data, email=form_registration.username.data, password=hashed_password)
+    if current_user.is_authenticated:
+        return redirect(url_for('main.blog'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.username.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
 
@@ -31,29 +33,29 @@ def register():
         shutil.copy(f'{os.getcwd()}/blog/static/img/profile_pics/default.png', full_path)
         flash('Account succefully created. Please, login', 'success')
         return redirect(url_for('main.index'))
-    return render_template('register.html', form_registration=form_registration, title='Registration Form', legend='Registration Form')
+    return render_template('register2.html', form_registration=form, title='Registration Form', legend='Registration Form')
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.blog'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
+            flash(f'You are logged in as {current_user.username}', 'info')
             return redirect(next_page) if next_page else redirect(url_for('users.account'))
         else:
-            flash('Войти не удалось. Пожалуйста, проверьте электронную почту или пароль', 'danger')
-    return render_template('login1.html', title='login1', legend="Login", form=form)
+            flash('Login failed. Please, check email and/or password', 'danger')
+    return render_template('login2.html', form_login=form, title='login2', legend="Login")
 
-
-@users.route('/account')
+@users.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    return render_template(
-        'account1.html',
-        title='account1',
-        current_user=current_user)
+    # user = User.query.filter_by(username=current_user.username).first()
+    return render_template('account2.html', title='account1', current_user=current_user)
 
 
 @users.route('/logout')

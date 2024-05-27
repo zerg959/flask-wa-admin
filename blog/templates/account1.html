@@ -1,22 +1,22 @@
-{% extends 'layout1.html' %}
+{% extends 'layout.html' %}
 {% block background %}
     <header class="masthead" style="background-image: url('/static/img/index-bg.jpeg')">
 {% endblock %}
 {% block content %}
-{% if current_user.is_authenticated %}
+{# {% if current_user.is_authenticated %} #}
 {% block title %}
     User {{ current_user.username }} Page
 {% endblock %}
-{% endif %}
+{# {% endif %} #}
 {% block header %}
     <h1></h1>
     <span class="subheading">A simple blog using Flask Python framework</span>
 {% endblock %}
-{% if current_user.is_authenticated %}
+{# {% if current_user.is_authenticated %} #}
 <p>{{ current_user.username }}</p>
 <p>{{ current_user.email }}</p>
 <p>{{ current_user.password }}</p>
 
-{% endif %}
+{# {% endif %} #}
 {% endblock content %}
 

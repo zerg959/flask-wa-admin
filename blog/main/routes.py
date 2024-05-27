@@ -13,11 +13,11 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index1.html', title='Main Page')
+    return render_template('index.html', title='Main Page')
 
 @main.route('/blog')
 def blog():
-    return render_template('index.html', title='Blog')
+    return render_template('index1.html', title='Blog')
 
 
 
