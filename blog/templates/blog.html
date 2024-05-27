@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block background %}
+    <header class="masthead" style="background-image: url('/static/img/post-bg.jpeg')">
+{% endblock %}
+{% block header %}
+    <h1>BLOG</h1>
+    <span class="subheading">A simple blog using Flask Python framework</span>
+{% endblock header %}
+{% block content %}
+      {% block title %}
+      Welcome to FlaskBlog
+      {% endblock title%}
+    <h1>FlaskBlog</h1>
+    <span class="subheading">A simple blog using Flask Python framework</span>
+    <ul>
+        <li>Flask</li>
+        <li>Jinja</li>
+        <li>SQLAlchemy</li>
+    </ul>
+{% endblock content %}
+{% block main %}
+
+{% endblock main %}

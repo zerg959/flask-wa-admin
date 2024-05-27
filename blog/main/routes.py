@@ -17,7 +17,7 @@ def index():
 
 @main.route('/blog')
 def blog():
-    return render_template('index1.html', title='Blog')
+    return render_template('blog.html', title='Blog')
 
 
 

@@ -23,7 +23,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.username.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
 
@@ -32,33 +32,36 @@ def register():
             os.mkdir(full_path)
         shutil.copy(f'{os.getcwd()}/blog/static/img/profile_pics/default.png', full_path)
         flash('Account succefully created. Please, login', 'success')
-        return redirect(url_for('main.index'))
-    return render_template('register2.html', form_registration=form, title='Registration Form', legend='Registration Form')
+        return redirect(url_for('users.login'))
+    return render_template('register.html', form_registration=form, title='Registration Form', legend='Registration Form')
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.blog'))
+        return redirect(url_for('users.account'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and bcrypt.check_password_hash(user.password,
+                                                form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            flash(f'You are logged in as {current_user.username}', 'info')
+            flash(f'You are logged in as {current_user.username}', 'success')
             return redirect(next_page) if next_page else redirect(url_for('users.account'))
         else:
             flash('Login failed. Please, check email and/or password', 'danger')
-    return render_template('login2.html', form_login=form, title='login2', legend="Login")
+    return render_template('login.html', form_login=form, title='login', legend="Login")
 
 @users.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
+    user=current_user
     # user = User.query.filter_by(username=current_user.username).first()
-    return render_template('account2.html', title='account1', current_user=current_user)
+    return render_template('account1.html', title='account1', user=current_user)
 
 
 @users.route('/logout')
 def logout():
     logout_user()
+    flash('You are logged out successfully!', 'success')
     return redirect(url_for('main.index'))
