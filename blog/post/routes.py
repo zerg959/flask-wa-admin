@@ -28,4 +28,4 @@ def new_post():
         return redirect(url_for('main.blog'))
     # image_file = url_for('static',
     #                      filename=f'profile_pics/' + current_user.username + '/post_images/' + current_user.image_file)
-    return render_template('create_post1.html', title='New Post', form=form, legend='New Post') # image_file=image_file)
+    return render_template('create_post.html', title='New Post', form=form, legend='New Post') # image_file=image_file)

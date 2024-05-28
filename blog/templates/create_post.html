@@ -1,32 +1,31 @@
-{% extends 'layout.html' %}
-
-{% block title %}
-    Create a New Post
-{% endblock %}
-
+{% extends "layout.html" %}
 {% block background %}
-    <header class="masthead" style="background-image: url('/static/img/create-bg.jpeg')">
+    <header class="masthead" style="background-image: url('/static/img/login-bg.jpeg')">
 {% endblock %}
 
 {% block header %}
-    <h1>New Post</h1>
-    <span class="subheading">Create a New Post</span>
+    <h1>Log In</h1>
+    <span class="subheading">Please enter your username and password below</span>
 {% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="login_form">
+  <form action="" method="POST">
 
-{% block main %}
-    <form action="" method="post">
-
+    {{ form.hidden_tag() }}
+        <legend class="legend">{{ legend }}</legend>
         <div class="form-floating">
-            <input autocomplete="off" class="form-control" id="title" name="title" type="text" placeholder="Please enter a title..." value="{{ form.title }}">
-            <label for="title">Title</label>
+        {{ form.title(class='form-post-title', placeholder='Post Title') }}
         </div>
-        
         <div class="form-floating">
-            <textarea autocomplete="off" class="form-control" id="content" name="content" placeholder="Enter post content here..." style="height: 15rem">{{ request.form['content'] }}</textarea>
-            <label for="content">Post Content</label>
+        {{ form.content(class='form-post-title', placeholder='Post Content') }}
         </div>
-        <br />
+        <!-- <div class="form-floating"> -->
+        {# {{ form.picture() }} #}
+        <!-- </div> -->
+        <div class="form-group">
+          {{ form.submit(class='btn-sign-in')}}
+      </div>
+ </form>
 
-        <button class="btn btn-primary text-uppercase mb-5" id="submitButton" type="submit">Submit</button>
-    </form>
-{% endblock %}
+{% endblock content %}
