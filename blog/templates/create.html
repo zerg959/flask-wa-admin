@@ -15,9 +15,10 @@
 
 {% block main %}
     <form action="{{ url_for('create') }}" method="post">
+      {{ form.hidden_tag() }}
         <div class="form-floating">
             <input autocomplete="off" class="form-control" id="title" name="title" type="text" placeholder="Please enter a title..." value="{{ request.form['title'] }}">
-            <label for="title">Title</label>
+            <label for="title">{{ legend }}</label>
         </div>
         <div class="form-floating">
             <input autocomplete="off" class="form-control" id="subtitle" name="subtitle" type="text" placeholder="Please enter a subtitle..." value="{{ request.form['subtitle'] }}">

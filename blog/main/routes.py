@@ -18,6 +18,3 @@ def index():
 @main.route('/blog')
 def blog():
     return render_template('blog.html', title='Blog')
-
-
-

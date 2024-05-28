@@ -27,10 +27,10 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        full_path = os.path.join(os.getcwd(), 'blog/static/img', 'profile_pics', user.username)
+        full_path = os.path.join(os.getcwd(), 'blog/static', 'profile_pics', user.username)
         if not os.path.exists(full_path):
             os.mkdir(full_path)
-        shutil.copy(f'{os.getcwd()}/blog/static/img/profile_pics/default.png', full_path)
+        shutil.copy(f'{os.getcwd()}/blog/static/profile_pics/default.png', full_path)
         flash('Account succefully created. Please, login', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', form_registration=form, title='Registration Form', legend='Registration Form')
