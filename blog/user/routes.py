@@ -9,7 +9,7 @@ from flask import (
 from flask_login import login_user, current_user, login_required, logout_user
 
 from blog import bcrypt, db
-from blog.models import User
+from blog.models import MyUser, MyPost
 from blog.user.forms import RegistrationForm, LoginForm
 
 
@@ -23,7 +23,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = MyUser(username=form.username.data, email=form.email.data, password=hashed_password, role=form.role.data)
         db.session.add(user)
         db.session.commit()
 
@@ -41,7 +41,7 @@ def login():
         return redirect(url_for('users.account'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = MyUser.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password,
                                                 form.password.data):
             login_user(user, remember=form.remember.data)
@@ -56,7 +56,7 @@ def login():
 @login_required
 def account():
     user=current_user
-    # user = User.query.filter_by(username=current_user.username).first()
+    # user = MyUser.query.filter_by(username=current_user.username).first()
     return render_template('account1.html', title='account1', user=current_user)
 
 
@@ -64,4 +64,15 @@ def account():
 def logout():
     logout_user()
     flash('You are logged out successfully!', 'success')
-    return redirect(url_for('main.index'))
+    return redirect(url_for('users.login'))
+
+
+@users.route('/user/<string:username>')
+# @users.route('/blog')
+@login_required
+def user_posts(username):
+    # page =  request.args.get('page', 1 , type=int)
+    user = MyUser.query.filter_by(username=username).first_or_404()
+    posts = MyPost.query.filter_by(user_id=user.id).order_by(MyPost.date_posted.desc())  #.paginate(page=page, per_page=5)
+    return render_template('blog.html', title='Blog', user=user, posts=posts) 
+  # Доделать редирект на блог пользователя

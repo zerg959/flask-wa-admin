@@ -7,10 +7,10 @@ from blog import db, bcrypt, login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return MyUser.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
+class MyUser(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,8 +18,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(60), nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
-    posts = db.relationship('Post', backref='author', lazy=True)
-    # role = db.Column(db.String(20), index=True)
+    posts = db.relationship('MyPost', backref='author', lazy=True)
+    role = db.Column(db.String(20), index=True)
 
     def set_password(self, password, hashed_password):
         self.hashed_password = bcrypt.generate_password_hash(
@@ -29,15 +29,15 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
     
-    # @property
-    # def is_admin(self):
-    #     return self.role == 'admin'
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
 
     def __repr__(self):
-        return f'User({self.username}, {self.role}, {self.email}, {self.password}, {self.image_file})'
+        return f'User({self.username}, {self.email}, {self.password}, {self.image_file})' # {self.role}, 
 
 
-class Post(db.Model):
+class MyPost(db.Model):
     __tablename__ = 'posts'
 
     id = db.Column(db.Integer, primary_key=True)

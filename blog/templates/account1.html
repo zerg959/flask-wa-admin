@@ -13,9 +13,11 @@
     <span class="subheading">A simple blog using Flask Python framework</span>
 {% endblock header %}
 {% if current_user.is_authenticated %}
-<p>{{ current_user.username }}</p>
-<p>{{ current_user.email }}</p>
-<p>{{ current_user.password }}</p>
+<p>Username: {{ current_user.username }}</p>
+<p>Email: {{ current_user.email }}</p>
+<p>Role: {{ current_user.role }}</p>
+<!-- <p>{# {{ current_user.password }} #}</p> -->
+<a href="{{ url_for('users.user_posts', username=current_user.username)}}">To {{ current_user.username }}'s Blog</a>
 
 {% endif %}
 {% endblock content %}

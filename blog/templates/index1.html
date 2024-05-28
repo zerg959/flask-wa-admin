@@ -1,0 +1,15 @@
+{% block content %}
+{% for post in posts %}
+        <div class="post-preview">
+            <a href="{{ url_for('posts.post', post_id=post.id) }}">
+                <h2 class="post-title">{{ post.title }}</h2>
+                <h3 class="post-subtitle">{{ post.author }}</h3>
+            </a>
+            <p class="post-meta">
+                Posted by {{ posts.author }} on {{ post.date_posted }}
+            </p>
+            <!-- Divider-->
+            <hr class="my-4" />
+        </div>
+    {% endfor %}
+{% endblock content %}

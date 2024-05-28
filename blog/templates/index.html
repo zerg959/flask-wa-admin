@@ -10,17 +10,16 @@
 {% block header %}
     <h1>FlaskBlog</h1>
     <span class="subheading">A simple blog using Flask Python framework</span>
-{% endblock %}
-
-{% block main %}
+{% endblock header%}
+{% block content %}
     {% for post in posts %}
         <div class="post-preview">
-            <a href="{{ url_for('post', post_id=post[0].id) }}">
-                <h2 class="post-title">{{ post[0].title }}</h2>
-                <h3 class="post-subtitle">{{ post[0].subtitle }}</h3>
+            <a href="{{ url_for('posts.post', post_id=post.id) }}">
+                <h2 class="post-title">{{ post.title }}</h2>
+                <h3 class="post-subtitle">{{ post.author.username }}</h3>
             </a>
             <p class="post-meta">
-                Posted by {{ post[1] }} on {{ post[0].created.strftime('%B %d, %Y') }}
+                Posted by {{ post.author.username }} on {{ post.date_posted.strftime('%Y-%m-%d') }}
             </p>
             <!-- Divider-->
             <hr class="my-4" />
@@ -30,4 +29,4 @@
     <!-- Pager-->
     <!-- TODO: add pager -->
 <!--    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>-->
-{% endblock %}
+{% endblock content %}

@@ -4,19 +4,25 @@
 {% endblock %}
 {% block header %}
     <h1>BLOG</h1>
-    <span class="subheading">A simple blog using Flask Python framework</span>
+    <span class="subheading">Welcome {{ current_user.username }}!</span>
 {% endblock header %}
 {% block content %}
       {% block title %}
-      Welcome to FlaskBlog
+      Welcome to {{ current_user.username }}'s personal blog
       {% endblock title%}
     <h1>FlaskBlog</h1>
     <span class="subheading">A simple blog using Flask Python framework</span>
-    <ul>
-        <li>Flask</li>
-        <li>Jinja</li>
-        <li>SQLAlchemy</li>
-    </ul>
+    
+<div>
+  <ul>
+      {% for post in posts %}
+        <li>Post title: {{ post.title }}</li>
+        <li>Post content: {{ post.content|truncate(50, False) }}</li>
+        <li>Date posted: {{ post.date_posted.strftime('%Y-%m-%d') }}</li>
+        <hr>
+      {% endfor %}
+  </ul>
+</div>
 {% endblock content %}
 {% block main %}
 
